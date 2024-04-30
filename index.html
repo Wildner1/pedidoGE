@@ -167,6 +167,44 @@
                 const size = formData.get("size");
                 const sizePrice = size === "300ml" ? 6.00 : 10.00;
 
+                // Construir o item do carrinho
+                let cartItem = `Tamanho: ${size}\n`;
+
+                if (additionals.length > 0) {
+                    cartItem += `Adicionais: ${additionals.join(", ")}\n`;
+                }
+
+                if (toppings.length > 0) {
+                    cartItem += `Coberturas: ${toppings.join(", ")}\n`;
+                }
+
+                if (fruits.length > 0) {
+                    cartItem += `Frutas: ${fruits.join(", ")}\n`;
+                }
+
+                // Adicionar item ao carrinho
+                const li = document.createElement("li");
+                li.textContent = cartItem;
+                cartItemsList.appendChild(li);
+
+                // Exibir o botão "Enviar Pedido"
+                submitButton.style.display = "block";
+            });
+
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                // Coletar os dados do formulário
+                const formData = new FormData(form);
+                const name = formData.get("name");
+
+                // Construir a mensagem do pedido
+                let message = `Pedido de Açaí para ${name}:\n`;
+
+                const cartItems = cartItemsList.querySelectorAll("li");
+                cartItems.forEach(function(item, index) {
+                    message += `\nItem ${index + 1}:\n${item.textContent}`;
+             });
                 // Somar o preço do tamanho do açaí ao total
                 totalValue += sizePrice;
 
