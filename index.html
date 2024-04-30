@@ -106,34 +106,34 @@
                 <fieldset>
                     <legend>Adicionais:</legend>
                     <!-- Adicionais aqui -->
-                    <input type="checkbox" id="leite-pó" name="additionals" value="leite-pó">
-                    <label for="leite-pó">Leite em pó</label>
-                    <input type="checkbox" id="paçoca" name="additionals" value="paçoca">
-                    <label for="paçoca">Paçoca</label>
-                    <input type="checkbox" id="granola" name="additionals" value="granola">
-                    <label for="granola">Granola</label>
-                    <input type="checkbox" id="amendoim" name="additionals" value="amendoim">
-                    <label for="amendoim">Amendoim</label>
+                    <input type="checkbox" id="add-leite-pó" name="additionals" value="leite-pó">
+                    <label for="add-leite-pó">Leite em pó</label>
+                    <input type="checkbox" id="add-paçoca" name="additionals" value="paçoca">
+                    <label for="add-paçoca">Paçoca</label>
+                    <input type="checkbox" id="add-granola" name="additionals" value="granola">
+                    <label for="add-granola">Granola</label>
+                    <input type="checkbox" id="add-amendoim" name="additionals" value="amendoim">
+                    <label for="add-amendoim">Amendoim</label>
                 </fieldset>
                 <fieldset>
                     <legend>Coberturas:</legend>
                     <!-- Coberturas aqui -->
-                    <input type="checkbox" id="chocolate" name="toppings" value="chocolate">
-                    <label for="chocolate">Cobertura de chocolate</label>
-                    <input type="checkbox" id="morango" name="toppings" value="morango">
-                    <label for="morango">Cobertura de morango</label>
-                    <input type="checkbox" id="leite-condensado" name="additionals" value="leite-condensado">
-                    <label for="leite-condensado">Leite condensado</label>
+                    <input type="checkbox" id="add-chocolate" name="toppings" value="chocolate">
+                    <label for="add-chocolate">Cobertura de chocolate</label>
+                    <input type="checkbox" id="add-morango" name="toppings" value="morango">
+                    <label for="add-morango">Cobertura de morango</label>
+                    <input type="checkbox" id="add-leite-condensado" name="additionals" value="leite-condensado">
+                    <label for="add-leite-condensado">Leite condensado</label>
                 </fieldset>
                 <fieldset>
                     <legend>Frutas:</legend>
                     <!-- Frutas aqui -->
-                    <input type="checkbox" id="banana" name="fruits" value="banana">
-                    <label for="banana">Banana</label>
-                    <input type="checkbox" id="morango-fruta" name="fruits" value="morango">
-                    <label for="morango-fruta">Morango</label>
-                    <input type="checkbox" id="uva-fruta" name="fruits" value="uva">
-                    <label for="uva-fruta">Uva</label>
+                    <input type="checkbox" id="add-banana" name="fruits" value="banana">
+                    <label for="add-banana">Banana</label>
+                    <input type="checkbox" id="add-morango-fruta" name="fruits" value="morango">
+                    <label for="add-morango-fruta">Morango</label>
+                    <input type="checkbox" id="add-uva-fruta" name="fruits" value="uva">
+                    <label for="add-uva-fruta">Uva</label>
                 </fieldset>
                 <button type="button" id="add-to-cart-button">Adicionar ao carrinho</button>
                 <button type="button" id="send-to-whatsapp-button">Enviar para o WhatsApp</button>
@@ -170,6 +170,22 @@
                 const size = formData.get("size");
                 const sizePrice = size === "300ml" ? 6.00 : 10.00;
 
+                // Adicionar itens selecionados ao carrinho
+                const selectedAdditionals = formData.getAll("additionals");
+                const selectedToppings = formData.getAll("toppings");
+                const selectedFruits = formData.getAll("fruits");
+
+                const item = {
+                    size: size,
+                    price: sizePrice,
+                    additionals: selectedAdditionals,
+                    toppings: selectedToppings,
+                    fruits: selectedFruits
+                };
+
+                // Adicionar item ao carrinho
+                addItemToCart(item);
+
                 // Somar o preço do tamanho do açaí ao total
                 totalValue += sizePrice;
 
@@ -179,6 +195,13 @@
                 // Exibir mensagem de sucesso
                 alert("Item adicionado ao carrinho");
             });
+
+            function addItemToCart(item) {
+                const cartItemsList = document.getElementById("cart-items");
+                const listItem = document.createElement("li");
+                listItem.textContent = `Tamanho: ${item.size}, Preço: R$ ${item.price.toFixed(2)}, Adicionais: ${item.additionals.join(", ")}, Coberturas: ${item.toppings.join(", ")}, Frutas: ${item.fruits.join(", ")}`;
+                cartItemsList.appendChild(listItem);
+            }
 
             sendToWhatsAppButton.addEventListener("click", function(event) {
                 event.preventDefault();
