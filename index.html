@@ -4,7 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja do Geração Eleita</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffd700; /* cor de fundo amarela */
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: #333; /* cor do texto preto */
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #order-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        form {
+            background-color: #f9f9f9; /* cor de fundo cinza claro */
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        fieldset {
+            margin-bottom: 15px;
+        }
+
+        legend {
+            font-weight: bold;
+        }
+
+        button {
+            background-color: #4caf50; /* cor de fundo verde */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049; /* cor de fundo verde mais escura */
+        }
+
+        footer {
+            background-color: #333; /* cor de fundo preta */
+            color: #fff; /* cor do texto branco */
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffd700; /* cor do link amarelo */
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -56,123 +136,45 @@
     <footer>
         <p>Entre em contato pelo WhatsApp: <a href="https://wa.me/SEUNUMERODOWHATSAPP">SEUNUMERODOWHATSAPP</a></p>
     </footer>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("acai-form");
+
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                // Coletar os dados do formulário
+                const formData = new FormData(form);
+                const name = formData.get("name");
+                const size = formData.get("size");
+                const additionals = formData.getAll("additionals");
+                const toppings = formData.getAll("toppings");
+                const fruits = formData.getAll("fruits");
+
+                // Construir a mensagem do pedido
+                let message = `Pedido de Açaí:\n`;
+                message += `Nome: ${name}\n`;
+                message += `Tamanho: ${size}\n`;
+
+                if (additionals.length > 0) {
+                    message += `Adicionais: ${additionals.join(", ")}\n`;
+                }
+
+                if (toppings.length > 0) {
+                    message += `Coberturas: ${toppings.join(", ")}\n`;
+                }
+
+                if (fruits.length > 0) {
+                    message += `Frutas: ${fruits.join(", ")}\n`;
+                }
+
+                // Enviar mensagem para o WhatsApp
+                const whatsappNumber = "SEUNUMERODOWHATSAPP"; // Substitua pelo número de WhatsApp correto
+                const whatsappMessage = encodeURIComponent(message);
+                const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+                window.location.href = whatsappLink;
+            });
+        });
+    </script>
 </body>
 </html>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background-color: #ffd700; /* cor de fundo amarela */
-    padding: 20px;
-    text-align: center;
-}
-
-h1 {
-    margin: 0;
-    color: #333; /* cor do texto preto */
-}
-
-main {
-    padding: 20px;
-}
-
-#order-form {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-form {
-    background-color: #f9f9f9; /* cor de fundo cinza claro */
-    padding: 20px;
-    border-radius: 8px;
-}
-
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-input[type="text"],
-select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-fieldset {
-    margin-bottom: 15px;
-}
-
-legend {
-    font-weight: bold;
-}
-
-button {
-    background-color: #4caf50; /* cor de fundo verde */
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #45a049; /* cor de fundo verde mais escura */
-}
-
-footer {
-    background-color: #333; /* cor de fundo preta */
-    color: #fff; /* cor do texto branco */
-    padding: 20px;
-    text-align: center;
-}
-
-footer a {
-    color: #ffd700; /* cor do link amarelo */
-}
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.getElementById("acai-form");
-
-    form.addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        // Coletar os dados do formulário
-        const formData = new FormData(form);
-        const name = formData.get("name");
-        const size = formData.get("size");
-        const additionals = formData.getAll("additionals");
-        const toppings = formData.getAll("toppings");
-        const fruits = formData.getAll("fruits");
-
-        // Construir a mensagem do pedido
-        let message = `Pedido de Açaí:\n`;
-        message += `Nome: ${name}\n`;
-        message += `Tamanho: ${size}\n`;
-
-        if (additionals.length > 0) {
-            message += `Adicionais: ${additionals.join(", ")}\n`;
-        }
-
-        if (toppings.length > 0) {
-            message += `Coberturas: ${toppings.join(", ")}\n`;
-        }
-
-        if (fruits.length > 0) {
-            message += `Frutas: ${fruits.join(", ")}\n`;
-        }
-
-        // Enviar mensagem para o WhatsApp
-        const whatsappNumber = "+5527997094763"; // Substitua pelo número de WhatsApp correto
-        const whatsappMessage = encodeURIComponent(message);
-        const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-        window.location.href = whatsappLink;
-    });
-});
