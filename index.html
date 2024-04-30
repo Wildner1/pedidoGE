@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja do Geração Eleita</title>
     <style>
+        /* Estilos CSS aqui */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -103,10 +104,9 @@
                 </select>
                 <fieldset>
                     <legend>Adicionais:</legend>
+                    <!-- Adicionais aqui -->
                     <input type="checkbox" id="leite-pó" name="additionals" value="leite-pó">
                     <label for="leite-pó">Leite em pó</label>
-                    <input type="checkbox" id="leite-condensado" name="additionals" value="leite-condensado">
-                    <label for="leite-condensado">Leite condensado</label>
                     <input type="checkbox" id="paçoca" name="additionals" value="paçoca">
                     <label for="paçoca">Paçoca</label>
                     <input type="checkbox" id="granola" name="additionals" value="granola">
@@ -116,6 +116,9 @@
                 </fieldset>
                 <fieldset>
                     <legend>Coberturas:</legend>
+                    <!-- Coberturas aqui -->
+                    <input type="checkbox" id="leite-condensado" name="additionals" value="leite-condensado">
+                    <label for="leite-condensado">Leite condensado</label>
                     <input type="checkbox" id="chocolate" name="toppings" value="chocolate">
                     <label for="chocolate">Cobertura de chocolate</label>
                     <input type="checkbox" id="morango" name="toppings" value="morango">
@@ -123,21 +126,56 @@
                 </fieldset>
                 <fieldset>
                     <legend>Frutas:</legend>
+                    <!-- Frutas aqui -->
                     <input type="checkbox" id="banana" name="fruits" value="banana">
                     <label for="banana">Banana</label>
                     <input type="checkbox" id="morango-fruta" name="fruits" value="morango">
                     <label for="morango-fruta">Morango</label>
+                    <input type="checkbox" id="uva-fruta" name="fruits" value="uva">
+                    <label for="uva-fruta">Uva</label>
                 </fieldset>
-                <button type="submit">Adicionar ao pedido</button>
+                <button type="button" id="add-to-cart-button">Adicionar ao carrinho</button>
+                <button type="submit" id="submit-button" style="display: none;">Enviar Pedido</button>
             </form>
         </section>
+        <div id="cart" style="display: none;">
+            <h2>Carrinho</h2>
+            <ul id="cart-items">
+                <!-- Itens do carrinho serão adicionados aqui -->
+            </ul>
+            <p id="total">Total: R$ 0,00</p>
+        </div>
     </main>
     <footer>
-        <p>Entre em contato pelo WhatsApp: <a href="https://wa.me/+5527997094763">Tirar Dúvidas com Wildner</a></p>
+        <p>Entre em contato pelo WhatsApp: <a href="https://wa.me/+5527997094763">Dúvidas? Favor entrar em contato</a></p>
     </footer>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const form = document.getElementById("acai-form");
+            const addToCartButton = document.getElementById("add-to-cart-button");
+            const submitButton = document.getElementById("submit-button");
+            const cartItems = document.getElementById("cart-items");
+            const totalElement = document.getElementById("total");
+
+            let totalValue = 0;
+
+            addToCartButton.addEventListener("click", function(event) {
+                event.preventDefault();
+
+                // Coletar os dados do formulário
+                const formData = new FormData(form);
+                const size = formData.get("size");
+                const sizePrice = size === "300ml" ? 6.00 : 10.00;
+
+                // Somar o preço do tamanho do açaí ao total
+                totalValue += sizePrice;
+
+                // Atualizar o valor total exibido
+                totalElement.textContent = `Total: R$ ${totalValue.toFixed(2)}`;
+
+                // Exibir mensagem de sucesso
+                alert("Item adicionado ao carrinho");
+            });
 
             form.addEventListener("submit", function(event) {
                 event.preventDefault();
@@ -166,6 +204,9 @@
                 if (fruits.length > 0) {
                     message += `Frutas: ${fruits.join(", ")}\n`;
                 }
+
+                // Adicionar total ao pedido
+                message += `Total: R$ ${totalValue.toFixed(2)}`;
 
                 // Enviar mensagem para o WhatsApp
                 const whatsappNumber = "27997094763"; // Substitua pelo número de WhatsApp correto
