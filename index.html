@@ -6,7 +6,7 @@
     <title>Loja do Geração Eleita</title>
     <style>
         /* Estilos CSS aqui */
-        body {
+          body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -117,12 +117,12 @@
                 <fieldset>
                     <legend>Coberturas:</legend>
                     <!-- Coberturas aqui -->
-                    <input type="checkbox" id="leite-condensado" name="additionals" value="leite-condensado">
-                    <label for="leite-condensado">Leite condensado</label>
                     <input type="checkbox" id="chocolate" name="toppings" value="chocolate">
                     <label for="chocolate">Cobertura de chocolate</label>
                     <input type="checkbox" id="morango" name="toppings" value="morango">
                     <label for="morango">Cobertura de morango</label>
+                    <input type="checkbox" id="leite-condensado" name="additionals" value="leite-condensado">
+                    <label for="leite-condensado">Leite condensado</label>
                 </fieldset>
                 <fieldset>
                     <legend>Frutas:</legend>
@@ -207,6 +207,7 @@
 
                 // Adicionar total ao pedido
                 message += `Total: R$ ${totalValue.toFixed(2)}`;
+
 
                 // Enviar mensagem para o WhatsApp
                 const whatsappNumber = "27997094763"; // Substitua pelo número de WhatsApp correto
